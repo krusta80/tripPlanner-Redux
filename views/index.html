@@ -11,7 +11,7 @@
 
   </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkarjA8hlysMC5aK7ywsrUwYY6UwpnXG0&sensor=true"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwgX7_5UpW_WWVNh8z0yw90bqmfx9Gm9o&sensor=true"></script>
 <script>
 function initialize_gmaps() {
     // initialize new google maps LatLng object
@@ -24,7 +24,6 @@ function initialize_gmaps() {
     };
     // get the maps div's HTML obj
     var map_canvas_obj = document.getElementById("map-canvas");
-    console.log(map_canvas_obj);
     // initialize a new Google Map with the options
     var map = new google.maps.Map(map_canvas_obj, mapOptions);
     // Add the marker to the map
@@ -34,10 +33,45 @@ function initialize_gmaps() {
     });
     // Add the marker to the map by calling setMap()
     marker.setMap(map);
+    return map;
 }
 
 $(document).ready(function() {
-    initialize_gmaps();
+    window.map = initialize_gmaps();
 });
 </script>
+
+<script>
+  {% autoescape false %}
+  // note to instructors: next iteration, change `all_xyz` to `templateXyz`
+  var ourData = {
+    Hotels: {{ hotels | json }},
+    Restaurants: {{ restaurants | json }},
+    Activities: {{ activities | json }}
+  };
+  
+  $('.selectors').on('click','button', function() {
+    var category = $(this).data("category");
+    var item  = $('select[data-category="'+category+'"] option:selected');
+    var itemID = item.val();
+    var newItineraryItem = $('{% include 'itineraryItem.html'%}');
+
+    $('.itinerary[data-category="'+category+'"]').append(newItineraryItem);
+
+    var location = ourData[category].filter(function(a){
+        return (a._id == itemID);
+    })[0].place.location;
+
+    var myLatlng = new google.maps.LatLng(location[0],location[1]);
+    
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        title:item.text()
+    });
+    marker.setMap(window.map);
+  });
+
+  {% endautoescape %}
+</script>
+
 {% endblock %}
