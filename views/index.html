@@ -86,7 +86,8 @@ $(document).ready(function() {
   });
 
   //Removing from itinerary
-  $('.itinerary').on('click','button', function() {
+  $('.day').on('click','.itinerary button', function() {
+    console.log("removing..."+markers[window.day-1]);
     markers[window.day-1][this.value].setMap(null);
     delete markers[window.day-1][this.value];
     $(this).parent().parent().remove();
