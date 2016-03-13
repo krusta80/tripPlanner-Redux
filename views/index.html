@@ -26,6 +26,7 @@ function initialize_gmaps() {
     var map_canvas_obj = document.getElementById("map-canvas");
     // initialize a new Google Map with the options
     var map = new google.maps.Map(map_canvas_obj, mapOptions);
+    window.bounds = new google.maps.LatLngBounds();
     // Add the marker to the map
     var marker = new google.maps.Marker({
         position: myLatlng,
@@ -33,6 +34,8 @@ function initialize_gmaps() {
     });
     // Add the marker to the map by calling setMap()
     marker.setMap(map);
+    marker.setVisible(false);
+    window.bounds.extend(marker.getPosition());
     return map;
 }
 
@@ -61,7 +64,9 @@ $(document).ready(function() {
     var item  = $('select[data-category="'+category+'"] option:selected');
     var itemID = item.val();
     var newItineraryItem = $('{% include 'itineraryItem.html'%}');
-
+    if(markers[window.day-1][itemID])
+        return;
+    
     $('#day'+window.day+' .itinerary[data-category="'+category+'"]').append(newItineraryItem);
 
     var location = ourData[category].filter(function(a){
@@ -76,6 +81,8 @@ $(document).ready(function() {
     });
     markers[window.day-1][itemID] = marker;
     marker.setMap(window.map);
+    window.bounds.extend(marker.getPosition());
+    window.map.fitBounds(window.bounds);
   });
 
   //Removing from itinerary
@@ -108,7 +115,7 @@ $(document).ready(function() {
     for(var m in markers[window.day-1]) {
         markers[window.day-1][m].setMap(window.map);
     }
-};
+  };
 
   //Switching days
   $('.nav-pills').on('click', 'a', function() {
@@ -124,9 +131,6 @@ $(document).ready(function() {
 
   //Removing a day
   $('#removeDay').on('click', function(){
-
-
-
     $('#day'+window.day).innerHTML = $("#day"+(window+day+1)).innerHTML;
     clearMarkers();
 
