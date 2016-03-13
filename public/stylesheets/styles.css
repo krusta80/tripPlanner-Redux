@@ -2,3 +2,17 @@
   border: solid 1px #ccc;
   border-radius: 5px;
   padding: 3px; }
+
+.itinerary h4 {
+  margin-bottom: 0; }
+
+.itinerary .itinerary-left {
+  margin-top: 5px;
+  margin-left: 7px;
+  padding-top: 3px; }
+
+.itinerary .itinerary-right {
+  margin-top: 5px; }
+
+.dayTitle {
+  text-align: center; }

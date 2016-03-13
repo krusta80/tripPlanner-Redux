@@ -1,4 +1,4 @@
-<h4 style='text-align: center'>Day 1</h4>
+<h4 class="dayTitle">Day 1</h4>
 <div class='panel panel-default'>
   <div class='panel-heading'>
     <ul class='nav nav-pills'>
@@ -30,13 +30,13 @@
   {% for x, y in dayCount %}
     <div class='panel-body hidden' id='day{{x+1}}'>
       <div class="itinerary row" data-category="Hotels">
-        <div class="panel-heading">My Hotels</div>
+        <div class="panel-heading"><h4>My Hotels</h4></div>
       </div>
       <div class="row itinerary" data-category="Restaurants">
-        <div class="panel-heading">My Restaurants</div>
+        <div class="panel-heading"><h4>My Restaurants</h4></div>
       </div>
       <div class = "row itinerary" data-category="Activities">
-        <div class="panel-heading">My Activities</div>
+        <div class="panel-heading"><h4>My Activities</h4></div>
       </div>
     </div>  
   {% endfor %}
