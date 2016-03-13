@@ -55,6 +55,7 @@ $(document).ready(function() {
   var markers = [];
   markers.push({});
   
+  //Adding to itinerary
   $('.selectors').on('click','button', function() {
     var category = $(this).data("category");
     var item  = $('select[data-category="'+category+'"] option:selected');
@@ -77,6 +78,7 @@ $(document).ready(function() {
     marker.setMap(window.map);
   });
 
+  //Removing from itinerary
   $('.itinerary').on('click','button', function() {
     markers[window.day-1][this.value].setMap(null);
     delete markers[window.day-1][this.value];
@@ -84,6 +86,7 @@ $(document).ready(function() {
 
   });
 
+  //Adding days
   $('#newDay').on('click', function(){
     markers.push({});
     $($('.nav-pills .hidden')[0]).removeClass('hidden');
@@ -93,7 +96,50 @@ $(document).ready(function() {
     }
   });
 
+  function clearMarkers(){
+    for(var m in markers[window.day-1]) {
+        markers[window.day-1][m].setMap(null);
+    }
+  };
 
+  function displayDay(day){
+    window.day = day;
+    $('#day'+window.day).removeClass('hidden');
+    for(var m in markers[window.day-1]) {
+        markers[window.day-1][m].setMap(window.map);
+    }
+};
+
+  //Switching days
+  $('.nav-pills').on('click', 'a', function() {
+    $('#day'+window.day).addClass('hidden');
+    clearMarkers();
+    displayDay($(this).data('day'));
+    
+    $('h4').text('Day '+window.day);
+    $('.active').removeClass('active');
+    $(this).parent().addClass('active');
+
+  });
+
+  //Removing a day
+  $('#removeDay').on('click', function(){
+
+
+
+    $('#day'+window.day).innerHTML = $("#day"+(window+day+1)).innerHTML;
+    clearMarkers();
+
+    markers.splice(window.day-1, 1);
+
+    displayDay(1);
+
+    $($('.nav-pills .hidden')[0]).removeClass('hidden');
+
+    if(markers.length == 3){
+        $(this).remove();
+    }
+  });
 
   {% endautoescape %}
 </script>

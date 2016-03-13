@@ -3,27 +3,30 @@
   <div class='panel-heading'>
     <ul class='nav nav-pills'>
       <li class='active'>
-        <a href='/'>
+        <a href='#' data-day="1">
           One
         </a>
       </li>
       <li class='hidden'>
-        <a href='/'>
+        <a href='#' data-day="2">
           Two
         </a>
       </li>
       <li class='hidden'>
-        <a href='/'>
+        <a href='#' data-day="3">
           Three
         </a>
       </li>
       <li>
         <button class='btn btn-sm btn-primary' id="newDay">+</button>
       </li>
+      <li>
+        <button class="btn btn-sm btn-danger" id="removeDay">x</button>
+      </li>
     </ul>
 
   </div>
-  {% set dayCount = Array(3) %}
+  {% set dayCount = Array(4) %}
   {% for x, y in dayCount %}
     <div class='panel-body hidden' id='day{{x+1}}'>
       <div class="itinerary row" data-category="Hotels">
