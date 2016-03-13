@@ -2,18 +2,18 @@
 <div class='panel panel-default'>
   <div class='panel-heading'>
     <ul class='nav nav-pills'>
-      <li class='active'>
-        <a href='#' data-day="1">
+      <li class='active' data-day="1">
+        <a href='#'>
           One
         </a>
       </li>
-      <li class='hidden'>
-        <a href='#' data-day="2">
+      <li class='hidden' data-day="2">
+        <a href='#'>
           Two
         </a>
       </li>
-      <li class='hidden'>
-        <a href='#' data-day="3">
+      <li class='hidden' data-day="3">
+        <a href='#'>
           Three
         </a>
       </li>
@@ -28,7 +28,7 @@
   </div>
   {% set dayCount = Array(4) %}
   {% for x, y in dayCount %}
-    <div class='panel-body hidden' id='day{{x+1}}'>
+    <div class='panel-body hidden day' id='day{{x+1}}'>
       <div class="itinerary row" data-category="Hotels">
         <div class="panel-heading"><h4>My Hotels</h4></div>
       </div>

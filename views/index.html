@@ -99,7 +99,7 @@ $(document).ready(function() {
     $($('.nav-pills .hidden')[0]).removeClass('hidden');
 
     if(markers.length == 3){
-        $(this).remove();
+        $(this).addClass('hidden');
     }
   });
 
@@ -111,38 +111,44 @@ $(document).ready(function() {
 
   function displayDay(day){
     window.day = day;
-    $('#day'+window.day).removeClass('hidden');
-    for(var m in markers[window.day-1]) {
-        markers[window.day-1][m].setMap(window.map);
+    $('#day'+day).removeClass('hidden');
+    for(var m in markers[day-1]) {
+        markers[day-1][m].setMap(window.map);
     }
+    $('.dayTitle').text('Day '+window.day);
+    $('.active').removeClass('active');
+    $('li[data-day="'+day+'"]').addClass('active');
   };
 
   //Switching days
   $('.nav-pills').on('click', 'a', function() {
     $('#day'+window.day).addClass('hidden');
     clearMarkers();
-    displayDay($(this).data('day'));
-    
-    $('.dayTitle').text('Day '+window.day);
-    $('.active').removeClass('active');
-    $(this).parent().addClass('active');
-
+    displayDay($(this).parent().data('day'));
   });
 
   //Removing a day
   $('#removeDay').on('click', function(){
-    $('#day'+window.day).innerHTML = $("#day"+(window+day+1)).innerHTML;
-    clearMarkers();
+    var i = window.day;
+    while (i < (markers.length + 1)){
+        document.getElementById("day" + i++).innerHTML = document.getElementById("day" + (i)).innerHTML;
+    }
+    $(".day").removeClass("hidden");
+    $(".day").addClass("hidden");
+
+    clearMarkers();    
+
+    $('li[data-day="'+markers.length+'"]').addClass('hidden');
 
     markers.splice(window.day-1, 1);
 
-    displayDay(1);
-
-    $($('.nav-pills .hidden')[0]).removeClass('hidden');
-
-    if(markers.length == 3){
+    if(markers.length == 1){
         $(this).remove();
     }
+
+    $("#newDay").removeClass('hidden');
+
+    displayDay(1);
   });
 
   {% endautoescape %}
