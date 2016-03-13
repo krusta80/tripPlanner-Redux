@@ -1,33 +1,40 @@
-<h4 style='text-align: center'>Day 2</h4>
+<h4 style='text-align: center'>Day 1</h4>
 <div class='panel panel-default'>
   <div class='panel-heading'>
     <ul class='nav nav-pills'>
-      <li>
+      <li class='active'>
         <a href='/'>
           One
         </a>
       </li>
-      <li>
+      <li class='hidden'>
         <a href='/'>
           Two
         </a>
       </li>
-      <li class='active'>
+      <li class='hidden'>
         <a href='/'>
           Three
         </a>
       </li>
+      <li>
+        <button class='btn btn-sm btn-primary' id="newDay">+</button>
+      </li>
     </ul>
+
   </div>
-  <div class='panel-body'>
-    <div class="itinerary row" data-category="Hotels">
-      <div class="panel-heading">My Hotels</div>
-    </div>
-    <div class="row itinerary" data-category="Restaurants">
-      <div class="panel-heading">My Restaurants</div>
-    </div>
-    <div class = "row itinerary" data-category="Activities">
-      <div class="panel-heading">My Activities</div>
-    </div>
-  </div>
-</div>
+  {% set dayCount = Array(3) %}
+  {% for x, y in dayCount %}
+    <div class='panel-body hidden' id='day{{x+1}}'>
+      <div class="itinerary row" data-category="Hotels">
+        <div class="panel-heading">My Hotels</div>
+      </div>
+      <div class="row itinerary" data-category="Restaurants">
+        <div class="panel-heading">My Restaurants</div>
+      </div>
+      <div class = "row itinerary" data-category="Activities">
+        <div class="panel-heading">My Activities</div>
+      </div>
+    </div>  
+  {% endfor %}
+   
